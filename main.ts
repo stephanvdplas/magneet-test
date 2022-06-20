@@ -1,51 +1,46 @@
 input.onButtonPressed(Button.A, function () {
-    tijd = randint(0, 25)
-    while (timer < tijd) {
-        basic.showIcon(IconNames.Heart)
-        basic.showIcon(IconNames.SmallHeart)
-        timer += 1
+    for (let index = 0; index < aantal_stokken; index++) {
+        music.playMelody("C5 A B G A F G E ", 1000)
+        timer = 0
+        tijd = randint(min_tijd, max_tijd)
+        while (timer < tijd) {
+            basic.showIcon(IconNames.Heart)
+            basic.showIcon(IconNames.SmallHeart)
+            timer += 1
+        }
+        stok = lijst.shift()
+        pins.digitalWritePin(stok + 112, 1)
+basic.showNumber(stok)
+        basic.pause(1000)
+        pins.digitalWritePin(stok + 112, 0)
     }
-    basic.showIcon(IconNames.Yes)
-    timer = 0
-    stok = lijst.pop()
-    basic.showNumber(stok)
-    if (stok == 1) {
-        pins.digitalWritePin(DigitalPin.P13, 1)
-        basic.pause(1000)
-        pins.digitalWritePin(DigitalPin.P13, 0)
-    } else if (stok == 2) {
-        pins.digitalWritePin(DigitalPin.P14, 1)
-        basic.pause(1000)
-        pins.digitalWritePin(DigitalPin.P14, 0)
-    } else if (stok == 3) {
-        pins.digitalWritePin(DigitalPin.P15, 1)
-        basic.pause(1000)
-        pins.digitalWritePin(DigitalPin.P15, 0)
-    } else {
-        pins.digitalWritePin(DigitalPin.P16, 1)
-        basic.pause(1000)
-        pins.digitalWritePin(DigitalPin.P16, 0)
-    }
+    music.playMelody("C5 A B G A F G E ", 1000)
+    basic.pause(5000)
+    control.reset()
 })
 input.onButtonPressed(Button.B, function () {
     control.reset()
 })
 let stok = 0
 let tijd = 0
+let timer = 0
 let willekeurig = 0
 let lijst: number[] = []
-let timer = 0
-timer = 0
-basic.showIcon(IconNames.Yes)
-let _1234 = [
-1,
-2,
-3,
-4
-]
+let max_tijd = 0
+let min_tijd = 0
+let aantal_stokken = 0
+aantal_stokken = 4
+min_tijd = 4
+max_tijd = 10
+let _1234: number[] = []
 lijst = []
-for (let index = 0; index < 4; index++) {
-    willekeurig = _1234._pickRandom()
-    lijst.push(willekeurig)
-    _1234.removeAt(willekeurig)
+for (let index = 0; index <= aantal_stokken - 1; index++) {
+    _1234.push(index)
 }
+for (let index = 0; index < aantal_stokken; index++) {
+    willekeurig = _1234._pickRandom()
+    lijst.push(willekeurig + 1)
+    _1234.removeAt(_1234.indexOf(willekeurig))
+}
+music.playMelody("C D E F G A B C5 ", 1000)
+basic.showIcon(IconNames.Yes)
